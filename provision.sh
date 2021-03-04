@@ -214,14 +214,9 @@ sudo -E service mysql restart
 
 export MYSQL_PWD=secret
 
-mysql --user="root" -e "ALTER USER 'root'@'localhost' IDENTIFIED BY 'secret';"
+mysql --user="root" -e "ALTER USER 'root'@'localhost' IDENTIFIED WITH mysql_native_password BY 'secret';"
 mysql --user="root" -e "GRANT ALL PRIVILEGES ON *.* TO 'root'@'localhost' WITH GRANT OPTION;"
-mysql --user="root" -e "CREATE USER 'homestead'@'0.0.0.0' IDENTIFIED BY 'secret';"
-mysql --user="root" -e "CREATE USER 'homestead'@'%' IDENTIFIED BY 'secret';"
-mysql --user="root" -e "GRANT ALL PRIVILEGES ON *.* TO 'homestead'@'0.0.0.0' WITH GRANT OPTION;"
-mysql --user="root" -e "GRANT ALL PRIVILEGES ON *.* TO 'homestead'@'%' WITH GRANT OPTION;"
 mysql --user="root" -e "FLUSH PRIVILEGES;"
-mysql --user="root" -e "CREATE DATABASE homestead character set UTF8mb4 collate utf8mb4_bin;"
 
 sudo -E tee /home/ubuntu/.my.cnf <<EOL
 [mysqld]
