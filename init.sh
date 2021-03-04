@@ -29,15 +29,7 @@ fi
 
 if [[ $add_swap == true ]]
 then
-	sudo -E fallocate -l $swap_amount /swapfile
-	sudo -E chmod 600 /swapfile
-	sudo -E mkswap /swapfile
-	sudo -E swapon /swapfile
-
-	sudo -E cp /etc/fstab /etc/fstab.bak
-	echo '/swapfile none swap sw 0 0' | sudo -E tee -a /etc/fstab
-
-	sudo -E swapon --show
+	sudo -E bash ./make-swap.sh $swap_amount
 fi
 
 
@@ -66,16 +58,16 @@ fi
 
 mkdir -p /home/$user/.ssh && cp /root/.ssh/authorized_keys $_
 
+sudo -E cp provision.sh /home/$user
+
 sudo -E su $user << EOF
 cd /home/$user
 
 sudo -E chown -R $user:$user /home/$user/.ssh
 
-wget -qO Provision.sh https://gitlab.com/snippets/1813577/raw
+sed -i "s/ubuntu/$user/g" provision.sh
+sed -i "s/secret/$mysql_password/g" provision.sh
+sed -i "s#UTC#$timezone#g" provision.sh
 
-sed -i "s/ubuntu/$user/g" Provision.sh
-sed -i "s/secret/$mysql_password/g" Provision.sh
-sed -i "s#UTC#$timezone#g" Provision.sh
-
-bash Provision.sh
+bash provision.sh
 EOF

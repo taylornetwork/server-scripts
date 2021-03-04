@@ -223,6 +223,9 @@ sudo -E chown -R ubuntu:ubuntu /usr/local/bin
 tee -a /home/ubuntu/.profile << EOF
 PATH=$(sudo -E su ubuntu -c 'composer config -g home')/vendor/bin:\$PATH
 alias mcomposer='php -d memory_limit=-1 $(which composer) '
+alias artisan='php artisan'
+alias a='php artisan'
+alias tinker='php artisan tinker'
 EOF
 
 source /home/ubuntu/.profile
