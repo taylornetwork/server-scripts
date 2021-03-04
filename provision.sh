@@ -232,6 +232,9 @@ sudo -E service mysql restart
 sudo -E systemctl enable supervisor.service
 sudo -E service supervisor start
 
+# Install certbot
+sudo -E snap install --classic certbot
+
 # One last upgrade check
 sudo -E apt-get upgrade -y
 
