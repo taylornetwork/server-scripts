@@ -28,7 +28,7 @@ then
 
 		mv blacklist blacklist.backup
 
-		echo blacklist => blacklist.backup
+		echo Rename blacklist to blacklist.backup
 	fi
 fi
 
@@ -36,7 +36,7 @@ echo Removing whitelist IPs from blacklist file...
 comm -23 <(sort temp_blacklist) <(sort whitelist) > blacklist
 
 mv temp_blacklist blacklist
-echo temp_blacklist => blacklist
+echo Rename temp_blacklist to blacklist
 
 echo Starting to ban all blacklist in 5 seconds...
 sleep 5
