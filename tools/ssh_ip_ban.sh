@@ -27,7 +27,7 @@ then
 	echo Existing blacklist file found.
 	if ! [ "$(cat tmp_blacklist | wc -l)" -eq "$(cat blacklist | wc -l)" ]
 	then
-		echo "** Different number of blacklist items **"
+		echo "*** Different number of blacklist items ***"
 		wc -l blacklist tmp_blacklist
 
 		mv blacklist blacklist.backup
@@ -41,14 +41,23 @@ mv tmp_blacklist blacklist
 echo Starting to ban all blacklist in 5 seconds...
 sleep 5
 
+let inserted=0
+let skipped=0
+
 for ip in $(cat blacklist)
 do
 	if ! [ "$(sudo ufw status numbered | grep $ip)" ]
 	then
 		sudo ufw insert 1 deny from $ip to any
 		echo Successfully banned $ip
+		let inserted++
 	else
 		echo $ip already banned
+		let skipped++
 	fi
 done
+
+echo "*** COMPLETED ***"
+echo $inserted IPs newly banned
+echo $skipped IPs already banned
 
