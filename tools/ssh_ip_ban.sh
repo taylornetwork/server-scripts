@@ -4,7 +4,7 @@ then
 	mv banlist banlist.backup
 fi
 
-sudo cat /var/log/auth.log | grep -v CRON | grep from | grep sshd | grep 'Bye Bye' | cut -f10- -d ' ' | cut -f1 -d ' ' | sort -u > banlist
+sudo cat /var/log/auth.log | grep -v CRON | grep from | grep sshd | grep 'preauth' | cut -f10- -d ' ' | cut -f1 -d ' ' | sort -u > banlist
 
 for ip in $(cat banlist)
 do
