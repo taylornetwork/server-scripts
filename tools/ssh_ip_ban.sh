@@ -14,29 +14,29 @@ then
 	touch whitelist
 fi
 
-sudo cat /var/log/auth.log | grep preauth | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" | sort -u > temp_blacklist
+sudo cat /var/log/auth.log | grep preauth | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" | sort -u > tmp
 
-echo Found $(cat temp_blacklist | wc -l) possible offending IP addresses...
+echo Removing whitelist IPs from blacklist file...
+comm -23 <(sort tmp) <(sort whitelist) > tmp_blacklist
+rm tmp
+
+echo Found $(cat tmp_blacklist | wc -l) possible offending IP addresses...
 
 if [ -f './blacklist' ]
 then
 	echo Existing blacklist file found.
-	if ! [ "$(cat temp_blacklist | wc -l)" -eq "$(cat blacklist | wc -l)" ]
+	if ! [ "$(cat tmp_blacklist | wc -l)" -eq "$(cat blacklist | wc -l)" ]
 	then
 		echo ** Different number of blacklist items **
-		wc -l blacklist temp_blacklist
+		wc -l blacklist tmp_blacklist
 
 		mv blacklist blacklist.backup
-
 		echo Rename blacklist to blacklist.backup
 	fi
 fi
 
-echo Removing whitelist IPs from blacklist file...
-comm -23 <(sort temp_blacklist) <(sort whitelist) > blacklist
 
-mv temp_blacklist blacklist
-echo Rename temp_blacklist to blacklist
+mv tmp_blacklist blacklist
 
 echo Starting to ban all blacklist in 5 seconds...
 sleep 5
