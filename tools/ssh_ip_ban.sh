@@ -27,7 +27,7 @@ then
 	echo Existing blacklist file found.
 	if ! [ "$(cat tmp_blacklist | wc -l)" -eq "$(cat blacklist | wc -l)" ]
 	then
-		echo ** Different number of blacklist items **
+		echo "** Different number of blacklist items **"
 		wc -l blacklist tmp_blacklist
 
 		mv blacklist blacklist.backup
