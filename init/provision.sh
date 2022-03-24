@@ -56,23 +56,17 @@ sudo -E ln -sf /usr/share/zoneinfo/UTC /etc/localtime
 sudo -E apt-get install -y --allow-change-held-packages \
 php-imagick php-memcached php-redis php-xdebug php-dev
 
-# PHP 8.0
+# PHP 8.1
 sudo -E apt-get install -y --allow-change-held-packages \
-php8.0 php8.0-bcmath php8.0-bz2 php8.0-cgi php8.0-cli php8.0-common php8.0-curl php8.0-dba php8.0-dev \
-php8.0-enchant php8.0-fpm php8.0-gd php8.0-gmp php8.0-imap php8.0-interbase php8.0-intl php8.0-ldap \
-php8.0-mbstring php8.0-mysql php8.0-odbc php8.0-opcache php8.0-pgsql php8.0-phpdbg php8.0-pspell php8.0-readline \
-php8.0-snmp php8.0-soap php8.0-sqlite3 php8.0-sybase php8.0-tidy php8.0-xml php8.0-xsl php8.0-zip
+php8.1 php8.1-bcmath php8.1-bz2 php8.1-cgi php8.1-cli php8.1-common php8.1-curl php8.1-dba php8.1-dev \
+php8.1-enchant php8.1-fpm php8.1-gd php8.1-gmp php8.1-imap php8.1-interbase php8.1-intl php8.1-ldap \
+php8.1-mbstring php8.1-mysql php8.1-odbc php8.1-opcache php8.1-pgsql php8.1-phpdbg php8.1-pspell php8.1-readline \
+php8.1-snmp php8.1-soap php8.1-sqlite3 php8.1-sybase php8.1-tidy php8.1-xml php8.1-xsl php8.1-zip
 
-# PHP 7.4
-sudo -E apt-get install -y --allow-change-held-packages \
-php7.4 php7.4-bcmath php7.4-bz2 php7.4-cgi php7.4-cli php7.4-common php7.4-curl php7.4-dba php7.4-dev \
-php7.4-enchant php7.4-fpm php7.4-gd php7.4-gmp php7.4-imap php7.4-interbase php7.4-intl php7.4-json php7.4-ldap \
-php7.4-mbstring php7.4-mysql php7.4-odbc php7.4-opcache php7.4-pgsql php7.4-phpdbg php7.4-pspell php7.4-readline \
-php7.4-snmp php7.4-soap php7.4-sqlite3 php7.4-sybase php7.4-tidy php7.4-xml php7.4-xmlrpc php7.4-xsl php7.4-zip
 
-sudo -E update-alternatives --set php /usr/bin/php8.0
-sudo -E update-alternatives --set php-config /usr/bin/php-config8.0
-sudo -E update-alternatives --set phpize /usr/bin/phpize8.0
+sudo -E update-alternatives --set php /usr/bin/php8.1
+sudo -E update-alternatives --set php-config /usr/bin/php-config8.1
+sudo -E update-alternatives --set phpize /usr/bin/phpize8.1
 
 # Install Composer
 sudo -E curl -sS https://getcomposer.org/installer | php
@@ -80,22 +74,17 @@ sudo -E mv composer.phar /usr/local/bin/composer
 sudo -E chown -R ubuntu:ubuntu /home/ubuntu/.config
 
 # Install Global Packages
-/usr/local/bin/composer global require "laravel/envoy=^2.0"
-/usr/local/bin/composer global require "laravel/installer=^4.0.2"
-/usr/local/bin/composer global require "laravel/spark-installer=dev-master"
-/usr/local/bin/composer global require "slince/composer-registry-manager=^2.0"
+# /usr/local/bin/composer global require "laravel/envoy=^2.0"
+# /usr/local/bin/composer global require "laravel/installer=^4.0.2"
+# /usr/local/bin/composer global require "laravel/spark-installer=dev-master"
+# /usr/local/bin/composer global require "slince/composer-registry-manager=^2.0"
 
 
 # Set Some PHP CLI Settings
-sudo -E sed -i "s/error_reporting = .*/error_reporting = E_ALL/" /etc/php/8.0/cli/php.ini
-sudo -E sed -i "s/display_errors = .*/display_errors = On/" /etc/php/8.0/cli/php.ini
-sudo -E sed -i "s/memory_limit = .*/memory_limit = 512M/" /etc/php/8.0/cli/php.ini
-sudo -E sed -i "s/;date.timezone.*/date.timezone = UTC/" /etc/php/8.0/cli/php.ini
-
-sudo -E sed -i "s/error_reporting = .*/error_reporting = E_ALL/" /etc/php/7.4/cli/php.ini
-sudo -E sed -i "s/display_errors = .*/display_errors = On/" /etc/php/7.4/cli/php.ini
-sudo -E sed -i "s/memory_limit = .*/memory_limit = 512M/" /etc/php/7.4/cli/php.ini
-sudo -E sed -i "s/;date.timezone.*/date.timezone = UTC/" /etc/php/7.4/cli/php.ini
+sudo -E sed -i "s/error_reporting = .*/error_reporting = E_ALL/" /etc/php/8.1/cli/php.ini
+sudo -E sed -i "s/display_errors = .*/display_errors = On/" /etc/php/8.1/cli/php.ini
+sudo -E sed -i "s/memory_limit = .*/memory_limit = 512M/" /etc/php/8.1/cli/php.ini
+sudo -E sed -i "s/;date.timezone.*/date.timezone = UTC/" /etc/php/8.1/cli/php.ini
 
 
 # Install Nginx
@@ -111,45 +100,26 @@ sudo -E touch /home/ubuntu/.config/nginx/nginx.conf
 sudo -E ln -sf /home/ubuntu/.config/nginx/nginx.conf /etc/nginx/conf.d/nginx.conf
 
 # Setup Some PHP-FPM Options
-sudo -E echo "xdebug.mode = debug" >> /etc/php/8.0/mods-available/xdebug.ini
-sudo -E echo "xdebug.discover_client_host = true" >> /etc/php/8.0/mods-available/xdebug.ini
-sudo -E echo "xdebug.client_port = 9003" >> /etc/php/8.0/mods-available/xdebug.ini
-sudo -E echo "xdebug.max_nesting_level = 512" >> /etc/php/8.0/mods-available/xdebug.ini
-sudo -E echo "opcache.revalidate_freq = 0" >> /etc/php/8.0/mods-available/opcache.ini
+sudo -E echo "xdebug.mode = debug" >> /etc/php/8.1/mods-available/xdebug.ini
+sudo -E echo "xdebug.discover_client_host = true" >> /etc/php/8.1/mods-available/xdebug.ini
+sudo -E echo "xdebug.client_port = 9003" >> /etc/php/8.1/mods-available/xdebug.ini
+sudo -E echo "xdebug.max_nesting_level = 512" >> /etc/php/8.1/mods-available/xdebug.ini
+sudo -E echo "opcache.revalidate_freq = 0" >> /etc/php/8.1/mods-available/opcache.ini
 
-sudo -E echo "xdebug.mode = debug" >> /etc/php/7.4/mods-available/xdebug.ini
-sudo -E echo "xdebug.discover_client_host = true" >> /etc/php/7.4/mods-available/xdebug.ini
-sudo -E echo "xdebug.client_port = 9003" >> /etc/php/7.4/mods-available/xdebug.ini
-sudo -E echo "xdebug.max_nesting_level = 512" >> /etc/php/7.4/mods-available/xdebug.ini
-sudo -E echo "opcache.revalidate_freq = 0" >> /etc/php/7.4/mods-available/opcache.ini
 
-sudo -E sed -i "s/error_reporting = .*/error_reporting = E_ALL/" /etc/php/8.0/fpm/php.ini
-sudo -E sed -i "s/display_errors = .*/display_errors = On/" /etc/php/8.0/fpm/php.ini
-sudo -E sed -i "s/;cgi.fix_pathinfo=1/cgi.fix_pathinfo=0/" /etc/php/8.0/fpm/php.ini
-sudo -E sed -i "s/memory_limit = .*/memory_limit = 512M/" /etc/php/8.0/fpm/php.ini
-sudo -E sed -i "s/upload_max_filesize = .*/upload_max_filesize = 100M/" /etc/php/8.0/fpm/php.ini
-sudo -E sed -i "s/post_max_size = .*/post_max_size = 100M/" /etc/php/8.0/fpm/php.ini
-sudo -E sed -i "s/;date.timezone.*/date.timezone = UTC/" /etc/php/8.0/fpm/php.ini
+sudo -E sed -i "s/error_reporting = .*/error_reporting = E_ALL/" /etc/php/8.1/fpm/php.ini
+sudo -E sed -i "s/display_errors = .*/display_errors = On/" /etc/php/8.1/fpm/php.ini
+sudo -E sed -i "s/;cgi.fix_pathinfo=1/cgi.fix_pathinfo=0/" /etc/php/8.1/fpm/php.ini
+sudo -E sed -i "s/memory_limit = .*/memory_limit = 512M/" /etc/php/8.1/fpm/php.ini
+sudo -E sed -i "s/upload_max_filesize = .*/upload_max_filesize = 100M/" /etc/php/8.1/fpm/php.ini
+sudo -E sed -i "s/post_max_size = .*/post_max_size = 100M/" /etc/php/8.1/fpm/php.ini
+sudo -E sed -i "s/;date.timezone.*/date.timezone = UTC/" /etc/php/8.1/fpm/php.ini
 
-sudo -E printf "[openssl]\n" | tee -a /etc/php/8.0/fpm/php.ini
-sudo -E printf "openssl.cainfo = /etc/ssl/certs/ca-certificates.crt\n" | tee -a /etc/php/8.0/fpm/php.ini
+sudo -E printf "[openssl]\n" | tee -a /etc/php/8.1/fpm/php.ini
+sudo -E printf "openssl.cainfo = /etc/ssl/certs/ca-certificates.crt\n" | tee -a /etc/php/8.1/fpm/php.ini
 
-sudo -E printf "[curl]\n" | tee -a /etc/php/8.0/fpm/php.ini
-sudo -E printf "curl.cainfo = /etc/ssl/certs/ca-certificates.crt\n" | tee -a /etc/php/8.0/fpm/php.ini
-
-sudo -E sed -i "s/error_reporting = .*/error_reporting = E_ALL/" /etc/php/7.4/fpm/php.ini
-sudo -E sed -i "s/display_errors = .*/display_errors = On/" /etc/php/7.4/fpm/php.ini
-sudo -E sed -i "s/;cgi.fix_pathinfo=1/cgi.fix_pathinfo=0/" /etc/php/7.4/fpm/php.ini
-sudo -E sed -i "s/memory_limit = .*/memory_limit = 512M/" /etc/php/7.4/fpm/php.ini
-sudo -E sed -i "s/upload_max_filesize = .*/upload_max_filesize = 100M/" /etc/php/7.4/fpm/php.ini
-sudo -E sed -i "s/post_max_size = .*/post_max_size = 100M/" /etc/php/7.4/fpm/php.ini
-sudo -E sed -i "s/;date.timezone.*/date.timezone = UTC/" /etc/php/7.4/fpm/php.ini
-
-sudo -E printf "[openssl]\n" | tee -a /etc/php/7.4/fpm/php.ini
-sudo -E printf "openssl.cainfo = /etc/ssl/certs/ca-certificates.crt\n" | tee -a /etc/php/7.4/fpm/php.ini
-
-sudo -E printf "[curl]\n" | tee -a /etc/php/7.4/fpm/php.ini
-sudo -E printf "curl.cainfo = /etc/ssl/certs/ca-certificates.crt\n" | tee -a /etc/php/7.4/fpm/php.ini
+sudo -E printf "[curl]\n" | tee -a /etc/php/8.1/fpm/php.ini
+sudo -E printf "curl.cainfo = /etc/ssl/certs/ca-certificates.crt\n" | tee -a /etc/php/8.1/fpm/php.ini
 
 # Disable XDebug On The CLI
 sudo -E phpdismod -s cli xdebug
@@ -158,23 +128,15 @@ sudo -E phpdismod -s cli xdebug
 sudo -E sed -i "s/user www-data;/user ubuntu;/" /etc/nginx/nginx.conf
 sudo -E sed -i "s/# server_names_hash_bucket_size.*/server_names_hash_bucket_size 64;/" /etc/nginx/nginx.conf
 
-sudo -E sed -i "s/user = www-data/user = ubuntu/" /etc/php/8.0/fpm/pool.d/www.conf
-sudo -E sed -i "s/group = www-data/group = ubuntu/" /etc/php/8.0/fpm/pool.d/www.conf
+sudo -E sed -i "s/user = www-data/user = ubuntu/" /etc/php/8.1/fpm/pool.d/www.conf
+sudo -E sed -i "s/group = www-data/group = ubuntu/" /etc/php/8.1/fpm/pool.d/www.conf
 
-sudo -E sed -i "s/listen\.owner.*/listen.owner = ubuntu/" /etc/php/8.0/fpm/pool.d/www.conf
-sudo -E sed -i "s/listen\.group.*/listen.group = ubuntu/" /etc/php/8.0/fpm/pool.d/www.conf
-sudo -E sed -i "s/;listen\.mode.*/listen.mode = 0666/" /etc/php/8.0/fpm/pool.d/www.conf
-
-sudo -E sed -i "s/user = www-data/user = ubuntu/" /etc/php/7.4/fpm/pool.d/www.conf
-sudo -E sed -i "s/group = www-data/group = ubuntu/" /etc/php/7.4/fpm/pool.d/www.conf
-
-sudo -E sed -i "s/listen\.owner.*/listen.owner = ubuntu/" /etc/php/7.4/fpm/pool.d/www.conf
-sudo -E sed -i "s/listen\.group.*/listen.group = ubuntu/" /etc/php/7.4/fpm/pool.d/www.conf
-sudo -E sed -i "s/;listen\.mode.*/listen.mode = 0666/" /etc/php/7.4/fpm/pool.d/www.conf
+sudo -E sed -i "s/listen\.owner.*/listen.owner = ubuntu/" /etc/php/8.1/fpm/pool.d/www.conf
+sudo -E sed -i "s/listen\.group.*/listen.group = ubuntu/" /etc/php/8.1/fpm/pool.d/www.conf
+sudo -E sed -i "s/;listen\.mode.*/listen.mode = 0666/" /etc/php/8.1/fpm/pool.d/www.conf
 
 sudo -E service nginx restart
-sudo -E service php8.0-fpm restart
-sudo -E service php7.4-fpm restart
+sudo -E service php8.1-fpm restart
 
 # Add ubuntu User To WWW-Data
 sudo -E usermod -a -G www-data ubuntu
@@ -184,14 +146,6 @@ sudo -E groups ubuntu
 # Install Node
 sudo -E apt-get install -y nodejs
 /usr/bin/npm install -g npm
-/usr/bin/npm install -g gulp-cli
-/usr/bin/npm install -g bower
-/usr/bin/npm install -g yarn
-/usr/bin/npm install -g grunt-cli
-
-
-# Install SQLite
-sudo -E apt-get install -y sqlite3 libsqlite3-dev
 
 # Install MySQL
 sudo -E echo "mysql-server mysql-server/root_password password secret" | debconf-set-selections
