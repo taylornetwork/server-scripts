@@ -6,10 +6,9 @@ export MYSQL_USER=$USER
 export MYSQL_USER_PWD=secret
 
 
-if (( $EUID == 0 ))
-then
-	echo 'Do not run as root'
-	exit 1
+if (( $EUID == 0 )); then
+    echo 'Do not run as root'
+    exit 1
 fi
 
 export DEBIAN_FRONTEND=noninteractive

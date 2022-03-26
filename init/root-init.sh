@@ -19,20 +19,17 @@ export MYSQL_USER=$NEW_USER
 export MYSQL_USER_PWD=secret
 # ******************************
 
-if [[ $ACCEPT != true ]]
-then
-    echo 'You must accept the risks associated with this script by changing $accept to true.'
-    exit 1
+if [[ $ACCEPT != true ]]; then
+	echo 'You must accept the risks associated with this script by changing $accept to true.'
+	exit 1
 fi
 
-if (( $EUID != 0 ))
-then
+if (( $EUID != 0 )); then
 	echo 'This script needs to be run as root!'
 	exit 1
 fi
 
-if [[ $ADD_SWAP == true ]]
-then
+if [[ $ADD_SWAP == true ]]; then
 	bash ./make-swap.sh $SWAP_AMOUNT
 fi
 
@@ -45,8 +42,7 @@ echo "$NEW_USER ALL=(ALL) NOPASSWD:ALL" | tee -a /etc/sudoers.tmp
 visudo -c -f /etc/sudoers.tmp
 code=$?
 
-if (( $code != 0 ))
-then
+if (( $code != 0 )); then
 	echo 'An error occurred setting up sudoers file. File remains unchanged'
 	exit $code
 fi
@@ -63,10 +59,10 @@ chown -R $NEW_USER:$NEW_USER /home/$NEW_USER
 su $NEW_USER << EOF
 cd /home/$NEW_USER
 
-sed -i "s/export PHP_VERSION=.*/export PHP_VERSION=$PHP_VERSION" user-init.sh
-sed -i "s/export MYSQL_ROOT_PWD=.*/export MYSQL_ROOT_PWD=$MYSQL_ROOT_PWD" user-init.sh
-sed -i "s/export MYSQL_USER=.*/export MYSQL_USER=$MYSQL_USER" user-init.sh
-sed -i "s/export MYSQL_USER_PWD=.*/export MYSQL_USER_PWD=$MYSQL_USER_PWD" user-init.sh
+sed -i "s/PHP_VERSION=.*/PHP_VERSION=$PHP_VERSION/" user-init.sh
+sed -i "s/MYSQL_ROOT_PWD=.*/MYSQL_ROOT_PWD=$MYSQL_ROOT_PWD/" user-init.sh
+sed -i "s/MYSQL_USER=.*/MYSQL_USER=$MYSQL_USER/" user-init.sh
+sed -i "s/MYSQL_USER_PWD=.*/MYSQL_USER_PWD=$MYSQL_USER_PWD/" user-init.sh
 
 bash user-init.sh
 EOF
