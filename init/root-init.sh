@@ -1,5 +1,7 @@
 #!/usr/bin/env bash
 
+# If you already have a non-root user account, edit and run the user-init.sh file, not this one.
+
 # *** WARNING ***
 # This file, if run as root will create a new user account and update your /etc/sudoers file.
 # It does use visudo to check syntax before writing changes so it shouldn't break your system but I do NOT guarantee it.
