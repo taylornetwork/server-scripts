@@ -32,17 +32,47 @@ sudo -E curl -sL https://deb.nodesource.com/setup_14.x | sudo -E bash -
 
 sudo -E apt update
 
-# PHP 8.1
-sudo -E apt install --allow-change-held-packages -y php$PHP_VERSION \
-php$PHP_VERSION-common php$PHP_VERSION-curl php$PHP_VERSION-mbstring \
-php$PHP_VERSION-mysql php$PHP_VERSION-xml php$PHP_VERSION-zip php$PHP_VERSION-dom \
-php$PHP_VERSION-bcmath openssl php$PHP_VERSION-mbstring php$PHP_VERSION-fpm
+# PHP minimum (maybe) 
+# sudo -E apt install --allow-change-held-packages -y php$PHP_VERSION \
+# php$PHP_VERSION-common php$PHP_VERSION-curl php$PHP_VERSION-mbstring \
+# php$PHP_VERSION-mysql php$PHP_VERSION-xml php$PHP_VERSION-zip php$PHP_VERSION-dom \
+# php$PHP_VERSION-bcmath openssl php$PHP_VERSION-mbstring php$PHP_VERSION-fpm
 
-# sudo -E apt-get install -y --allow-change-held-packages \
-# php8.1 php8.1-bcmath php8.1-bz2 php8.1-cgi php8.1-cli php8.1-common php8.1-curl php8.1-dba php8.1-dev \
-# php8.1-enchant php8.1-fpm php8.1-gd php8.1-gmp php8.1-imap php8.1-interbase php8.1-intl php8.1-ldap \
-# php8.1-mbstring php8.1-mysql php8.1-odbc php8.1-opcache php8.1-pgsql php8.1-phpdbg php8.1-pspell php8.1-readline \
-# php8.1-snmp php8.1-soap php8.1-sqlite3 php8.1-sybase php8.1-tidy php8.1-xml php8.1-xsl php8.1-zip
+# PHP from laravel/settler
+sudo -E apt-get install -y --allow-change-held-packages \
+php$PHP_VERSION \
+php$PHP_VERSION-bcmath \
+php$PHP_VERSION-bz2 \
+php$PHP_VERSION-cgi \
+php$PHP_VERSION-cli \
+php$PHP_VERSION-common \
+php$PHP_VERSION-curl \
+php$PHP_VERSION-dba \
+php$PHP_VERSION-dev \
+php$PHP_VERSION-enchant \
+php$PHP_VERSION-fpm \
+php$PHP_VERSION-gd \
+php$PHP_VERSION-gmp \
+php$PHP_VERSION-imap \
+php$PHP_VERSION-interbase \
+php$PHP_VERSION-intl \
+php$PHP_VERSION-ldap \
+php$PHP_VERSION-mbstring \
+php$PHP_VERSION-mysql \
+php$PHP_VERSION-odbc \
+php$PHP_VERSION-opcache \
+php$PHP_VERSION-pgsql \
+php$PHP_VERSION-phpdbg \
+php$PHP_VERSION-pspell \
+php$PHP_VERSION-readline \
+php$PHP_VERSION-snmp \
+php$PHP_VERSION-soap \
+php$PHP_VERSION-sqlite3 \
+php$PHP_VERSION-sybase \
+php$PHP_VERSION-tidy \
+php$PHP_VERSION-xml \
+php$PHP_VERSION-xsl \
+php$PHP_VERSION-zip
 
 # Composer
 sudo -E curl -sS https://getcomposer.org/installer | php
@@ -140,7 +170,7 @@ sudo -E snap install --classic certbot
 
 sudo -E nginx -s reload
 sudo -E service mysql restart
-sudo -E service php8.1-fpm restart
+sudo -E service php$PHP_VERSION-fpm restart
 
 
 
