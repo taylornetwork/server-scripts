@@ -16,6 +16,7 @@ export SWAP_AMOUNT=4G
 
 # ** VARIABLES FOR USER-INIT.SH **
 export PHP_VERSION=8.1
+export NODE_VERSION=lts
 export MYSQL_ROOT_PWD=secret
 export MYSQL_USER=$NEW_USER
 export MYSQL_USER_PWD=secret
@@ -62,6 +63,7 @@ su $NEW_USER << EOF
 cd /home/$NEW_USER
 
 sed -i "s/PHP_VERSION=.*/PHP_VERSION=$PHP_VERSION/" user-init.sh
+sed -i "s/NODE_VERSION=.*/NODE_VERSION=$NODE_VERSION/" user-init.sh
 sed -i "s/MYSQL_ROOT_PWD=.*/MYSQL_ROOT_PWD=$MYSQL_ROOT_PWD/" user-init.sh
 sed -i "s/MYSQL_USER=.*/MYSQL_USER=$MYSQL_USER/" user-init.sh
 sed -i "s/MYSQL_USER_PWD=.*/MYSQL_USER_PWD=$MYSQL_USER_PWD/" user-init.sh
