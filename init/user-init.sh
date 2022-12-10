@@ -1,6 +1,8 @@
 #!/usr/bin/env bash
 
 export PHP_VERSION=8.1
+export NODE_VERSION=lts
+
 export MYSQL_ROOT_PWD=secret
 export MYSQL_USER=$USER
 export MYSQL_USER_PWD=secret
@@ -28,7 +30,10 @@ sudo -E apt install -y software-properties-common curl p7zip zip unzip
 sudo -E apt-add-repository ppa:ondrej/php -y
 
 # NodeJS
-sudo -E curl -sL https://deb.nodesource.com/setup_14.x | sudo -E bash -
+sudo -E apt install -y npm
+sudo -E npm install --global n
+sudo -E n install $NODE_VERSION
+
 
 sudo -E apt update
 
