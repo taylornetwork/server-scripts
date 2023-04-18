@@ -26,8 +26,9 @@ sudo -E apt update
 sudo -E apt upgrade -y
 sudo -E apt install -y software-properties-common curl p7zip zip unzip
 
-# PHP PPA
+# PPAs
 sudo -E apt-add-repository ppa:ondrej/php -y
+sudo -E apt-add-repository ppa:ondrej/nginx -y
 
 # NodeJS
 sudo -E apt install -y npm
