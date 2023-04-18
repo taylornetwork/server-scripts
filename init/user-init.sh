@@ -30,6 +30,8 @@ sudo -E apt install -y software-properties-common curl p7zip zip unzip
 sudo -E apt-add-repository ppa:ondrej/php -y
 sudo -E apt-add-repository ppa:ondrej/nginx -y
 
+sudo -E apt update
+
 # NodeJS
 sudo -E apt install -y npm
 sudo -E npm install --global n
