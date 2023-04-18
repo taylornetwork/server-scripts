@@ -15,7 +15,7 @@ export ADD_SWAP=true
 export SWAP_AMOUNT=4G
 
 # ** VARIABLES FOR USER-INIT.SH **
-export PHP_VERSION=8.1
+export PHP_VERSION=8.2
 export NODE_VERSION=lts
 export MYSQL_ROOT_PWD=secret
 export MYSQL_USER=$NEW_USER

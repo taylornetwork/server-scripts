@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 
-export PHP_VERSION=8.1
+export PHP_VERSION=8.2
 export NODE_VERSION=lts
 
 export MYSQL_ROOT_PWD=secret
