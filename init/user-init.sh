@@ -119,14 +119,14 @@ server {
     charset utf-8;
 
     location / {
-        try_files $uri $uri/ /index.php?$query_string;
+        try_files \$uri \$uri/ /index.php?\$query_string;
     }
 
     location = /favicon.ico { access_log off; log_not_found off; }
     location = /robots.txt  { access_log off; log_not_found off; }
 
     access_log off;
-    error_log  /var/log/nginx/$server_name-error.log error;
+    error_log  /var/log/nginx/\$server_name-error.log error;
 
     sendfile off;
 
@@ -137,7 +137,7 @@ server {
         fastcgi_pass unix:/var/run/php/php$PHP_VERSION-fpm.sock;
         fastcgi_index index.php;
         include fastcgi_params;
-        fastcgi_param SCRIPT_FILENAME $document_root$fastcgi_script_name;
+        fastcgi_param SCRIPT_FILENAME \$document_root\$fastcgi_script_name;
 
         fastcgi_intercept_errors off;
         fastcgi_buffer_size 16k;
